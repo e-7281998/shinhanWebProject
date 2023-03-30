@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	window.onload = function() {
+		//alert("load끝");
+		here.innerHTML = "<h1>load끝</h1>";
+		btn0.onclick = call0;
+		btn1.onclick = call;
+		btn2.onclick = call2;
+		btn3.onclick = call3;
+		btn4.onclick = call4;
+		btn5.onclick = call5;
+		btn6.onclick = call6;
+		btn7.onclick = call7;
+	};
+	function call0(){
+		document.getElementById("here").innerHTML = "";
+	}
+	
+	function call(){
+		var elementNode = document.createElement("h1");
+		var textNode = document.createTextNode("Dom 연습");	//dom연습
+		elementNode.appendChild(textNode);
+		var here = document.getElementById("here");
+		here.appendChild(elementNode);
+	}
+	function call2(){
+		var here = document.getElementById("here");
+		here.innerHTML += "<h1>Dom연습</h1>";
+	}
+	function call3(){
+		var elementNode = document.createElement("img");
+		var imageName = "../html5-css3-master/01/images/watch.jpg";
+		elementNode.src = elementNode;
+		
+		elementNode.setAttribute("SHINEE", "샤이니");
+		
+		var here = document.getElementById("here");
+		here.appendChild(elementNode);
+		
+		here.innerHTML += `<img src='${imageName}'>`
+
+	}
+	function call4(){
+		var buttons = document.getElementsByTagName("button");
+		for(let i=0; i<buttons.length; i++){
+			here.innerHTML += "<br>" +buttons[i].innerHTML;
+			var data = buttons[i].getAttribute("data-id");
+			here.innerHTML += "<br>" + data;
+			
+			buttons[i].style.color = "white";
+			buttons[i].style.backgroundColor = "blue";
+			buttons[i].style.padding = "15px";
+			
+		}
+	}
+	function call5(){
+		var fruits = document.getElementsByName("fruit");
+		for(let i=0; i<fruits.length; i++){
+			var val = fruits[i].value;
+			var chk = fruits[i].checked;
+			console.log(val, chk);
+		}
+	}
+	function call6(){
+		var fruits = document.querySelectorAll('input[name="fruit"]:checked');
+		for(let i=0; i<fruits.length; i++){
+			var val = fruits[i].value;
+			console.log(val);
+		}
+	}
+	function call7(){
+		var here = document.getElementById("here");
+		here.parentNode.removeChild(here);
+	}
+	
+</script>
+</head>
+<body>
+	<h1>DOM : Document Object Model에 대하여</h1>
+
+	<button id="btn0">CLEAN</button>
+	<button id="btn1">노드 생성</button>
+	<button id="btn2">innerHTML</button>
+	<button id="btn3">이미지(속성변경)</button>
+	<button id="btn4" data-id="4">getElementsByTagName</button>
+	<button id="btn5">getElemenstByName</button>
+	<button id="btn6">querySelectorAll</button>
+	<button id="btn7">removeChild</button>
+	
+
+	<hr>
+	<label>
+		<input type="checkbox" name="fruit" value="apple">
+		<span>사과</span>
+	</label>
+	<label>
+		<input type="checkbox" name="fruit" value="banana">
+		<span>바나나</span>
+	</label>
+	<label>
+		<input type="checkbox" name="fruit" value="orange">
+		<span>오렌지</span>
+	</label>
+
+	<div id="here">여기</div>
+</body>
+</html>
