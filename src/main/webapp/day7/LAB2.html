@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	function check(selectNo){
+		//sol1
+		/* var imgName = "";
+		if(selectNo==1){
+			imgName = "images/catImg1.jpg";
+		}else{
+			imgName = "images/catImg2.jpg";
+		} */
+		
+		//sol2
+		//var imgName="images/catImg"+selectNo+".jpg";
+		var imgName=`images/catImg${selectNo}.jpg`;
+		
+		var obj = document.getElementById("inputImage");
+		//sol1	//혹은 백틱으로 사용할 수 있음.
+		//obj.innerHTML = "<img src='" + imgName + "'>'";
+		
+		//sol2
+		var element = document.createElement("img");
+		element.src = imgName;
+		obj.innerHTML = "";
+		obj.appendChild(element);
+	}
+</script>
+</head>
+<body>
+	<!-- 문제. 다음폼에서 버튼을 클릭하면 inputImage 부분에 사진이 보이도록 한다.
+
+	<div id="inputImage"></div>
+	<form>
+		<input type="button" value="내사진1" onclick="Check(1)" /> <input
+			type="button" value="내사진2" onclick="Check(2)" />
+	</form>
+ -->
+	<form>
+		<input type="button" value="내사진1" onclick="check(1)" />
+		<input type="button" value="내사진2" onclick="check(2)" />
+	</form>
+	<div id="inputImage"></div>
+	
+</body>
+</html>

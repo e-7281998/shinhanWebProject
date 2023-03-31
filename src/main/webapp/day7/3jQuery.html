@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+	//가장 최신 값이 실행된다. 
+	//window.onload = function(){alert("onload1")};
+	//window.onload = function(){alert("onload2")};
+	
+	//계속 추가된다. (최신값만 수행되는 것이 아니라 이전의 모든 값도 수행된다.)
+	//$(document).ready(function(){alert("jquery load1")});
+	//$(document).ready(function(){alert("jquery load2")});
+	//$() //는 $(document).ready와 같다. 생략된 버전임. //의미 : 문서 로드가 끝나면 
+	
+	
+	$(function(){
+		//alert('jquery load3');
+		$("h1, p").css("color","red");
+		
+		$("input[type='text']").css("background", "lightgreen");
+		$("input[type='text']").val("Hello!!!");
+		$("input[type='search'][value]").css("color", "orange");
+		
+		var subject = $("select > option:selected").val();
+		$("h1:first").html(subject);
+		$("h1:last").html(subject);
+		alert(subject);
+	});
+</script>
+</head>
+<body>
+	<h1>jquery</h1>
+	<h1>jquery</h1>
+	<h1>jquery</h1>
+	<h1>jquery</h1>
+	<h1>jquery</h1>
+	<p>jQuery 문법</p>
+	<p>jQuery 문법</p>
+	<p>jQuery 문법</p>
+	<p>jQuery 문법</p>
+	<p>jQuery 문법</p>
+	
+	<select>
+		<option>HTML5</option>
+		<option>CSS3</option>
+		<option>JavaScript</option>
+		<option selected>jQuery</option>
+	</select>
+	
+	<input>
+	<input type="text">
+	<input type="text">
+	<input type="text">
+	<input type="search"  value="jquery">
+	<input type="search"  value="jquery">
+	<input type="search">
+	<input type="password">
+	<input type="number">
+	
+	<script>
+		//body실행 후 실행되는 script임... 그러므로 h1을 찾을 수 있음 -> $()안써도 됨.
+		$("h1").css("backgroundColor", "yellow")
+	</script>
+</body>
+</html>
