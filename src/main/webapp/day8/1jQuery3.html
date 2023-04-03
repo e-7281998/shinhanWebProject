@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 1. 웹사이트가 jQuery library를 가지고 있는 경우 -->
+<!-- 2.CDN 이용하는 방법 -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+	
+	
+	 //문서가 load후에 function 수행한다는 의미
+	 $(document).ready(function(){});
+	 $(function(){
+		$("#btn1").click(function(){
+			$("p:nth-of-type(2n-1)").css("background-color","yellow");
+		});
+		
+		 $("#btn2").click(function(){
+			 $("p").each(function(index, item){
+				 $(item).addClass("myStyle"+(index%2+1));	//1212
+			 });
+		 });
+		 
+		 $("#btn3").click(function(){
+			 $("p").removeClass("myStyle1");
+			 $("p").removeClass("myStyle2");
+		 });
+		 
+		 $.noConflict();	//더이상 $를 사용하지 않음을 의미.
+			//$() => jQuery()로 사용하면 됨 됨
+
+			
+		 jQuery("#btn4").click(function(){
+			 var obj = {};
+			 obj.myname = "홍길동";
+			 obj.age = 20;
+			 var obj2 = {"address" : "서울시 마포구", phone:"010-1234-1234"};
+			 jQuery.extend(obj, obj2, {major: "컴공"});	//뒤에가 앞으로 들어감 > 모듀 obj로 들어감
+			 console.log(obj);
+			 
+			 var str="<ul>"
+			 
+			jQuery.each(obj, function(key, item){
+				 str = `<li>${key} ---${item}</li>`;
+			 });
+			 jQuery("#here").html(str);	//innerHTML과 같음
+			 
+			 
+		 });
+	 });
+	 
+	
+	 
+</script>
+<style>
+	p:nth-of-type(even){
+		background-color: lightgreen;
+	}
+	
+	.myStyle1 { border : 5px dotted blue; }
+	.myStyle2 { border : 5px dotted red; }
+</style>
+</head>
+<body>
+	<h1>jQuery 연습1</h1>
+	<button id="btn1">홀수찾기</button>
+	<button id="btn2">addClassA</button>
+	<button id="btn3">removeClassB</button>
+	<button id="btn4">Object 확장</button>
+	<p>p1</p>
+	<p>p2</p>
+	<p>p3</p>
+	<p>p4</p>
+	<p>p5</p>
+	<div id="here"></div>
+</body>
+</html>

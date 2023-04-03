@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 1. 웹사이트가 jQuery library를 가지고 있는 경우 -->
+<!-- 2.CDN 이용하는 방법 -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+	//$(document).ready(f);
+	//function f(){}
+	//문서가 load 후에 function() 수행한다는 의미 : 위의 두 코드 합침
+	$(function() {
+		$("h1").css("backgroundColor", "lightpink");
+		$("h2").css({
+			"backgroundColor" : "skyblue",
+			"color" : "blue"
+		});
+		
+		$("div").css("border","1px solid green");
+		//$("p:nth-child(even)").css("backgroundColor","yellow");	//자식중에 p가 짝수번째인경우
+		$("p:nth-of-type(even)").css("backgroundColor","yellow");	//자식 p중에 짝수번째인 경우
+	})
+</script>
+</head>
+<body>
+	<h1>jQuery 연습1</h1>
+	<h2>jQuery 연습2</h2>
+	<h2>jQuery 연습2</h2>
+	
+	<p>p1</p>
+	<p>p2</p>
+	<p>p3</p>
+	<p>p4</p>
+	<p>p5</p>
+	<p>p5</p>
+	
+	<div>
+	<h2>jQuery 연습2</h2>
+		<p>p1</p>
+		<p>p2</p>
+		<p>p3</p>
+		<p>p4</p>
+		<p>p5</p>
+	</div>
+</body>
+</html>

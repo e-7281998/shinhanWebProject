@@ -136,11 +136,27 @@ table{
 	   //body > div > table > tbody > tr:nth-child(1) > td:nth-child(2)
 	   //body > div > table > tbody > tr:nth-child(2) > td:nth-child(2)
 	   $("#stylebtn > button:nth-child(3)").click(function(){
-			var start = prompt("무엇으로 시작하는 직원을 찾고싶나요?",'A');
+			var start = prompt("찾고자하는 직원의 이름을 입력하세요",'Steven');
 		   //$("tbody > tr > td:nth-child(2):contains('S')"); //이름이 S로 시작하는 직원 찾기
 		   $("tbody > tr > td:nth-child(2)").parent().css({"backgroundColor":"transparent", "fontWeight":"400"});
 		   $("tbody > tr > td:nth-child(2):contains('"+start+"')").parent().css({"backgroundColor":"lightyellow", "fontWeight":"bold"});
 	   });
+	   
+   		$("select").change(function(){
+   			var jobid = $(this).val();
+   			//init();
+   			$("tr td").css("color","black");
+   			$("tr td:contains('" + jobid + "')").css("color", "red");
+ 		});
+   		
+   		var str = "";
+   		var arr = ["IT_PROG", "AD_PRES", "AD_VP", "ST_MAN"];
+   		$.each(arr, function(index, item){
+   			console.log(`${item}`)
+   			str += `<option>${item}</option>`;
+   		});
+   		
+   		$("#jobs").html(str);
 	   
    });
   </script>
@@ -157,8 +173,24 @@ table{
 		<div id="stylebtn">
 			<button>짝수 행 선택</button>
 			<button>홀수 행 선택</button>
-			<button>이름이 ?로 시작하는 직원</button>
+			<button>직원 이름으로 찾기</button>
 		</div>
+		<select>
+			<option>AD_PRES</option>
+			<option>AD_VP</option>
+			<option>IT_PROG</option>
+			<option>FI_MGR</option>
+			<option>FI_ACCOUNT</option>
+			<option>PU_MAN</option>
+			<option>ST_MAN</option>
+			<option>ST_CLERK</option>
+			<option>SA_REP</option>
+			<option>SH_CLERK</option>
+			<option>AD_ASST</option>
+			<option>MK_MAN</option>
+		</select>
+		<select id="jobs">
+		</select>
 		<table class="table table-hover">
 			<thead>
 				<tr>

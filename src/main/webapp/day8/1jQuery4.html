@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 1. 웹사이트가 jQuery library를 가지고 있는 경우 -->
+<!-- 2.CDN 이용하는 방법 -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<style>
+	#here div {
+	 border : 1px solid oange;
+	 };
+</style>
+<script>
+	$(function(){
+		$("#btn1").click(function(){
+			$("img").css("border","2px solid red");
+			//이 코드 다음에 obj를 넣음... 그러므로 img의 index를 알 수 있음 //obj는 그냥 정의만.
+			var obj = {"width" : 200, height: function(index){console.log(index); return (index+1)*100;}};
+			$("img").attr(obj);
+		});
+		
+		$("#btn2").click(function(){
+			$("img").removeAttr("width");
+			$("img").removeAttr("height");
+		});
+		
+		$("#btn3").click(function(){
+			var arr = ["red", "blue", "green", "pink", "gold"];
+			$("img").css("border",function (index, item){
+				console.log(arr[index]);
+				return "1px solid "+arr[index];
+			});
+		});
+		
+		$("#btn4").click(function(){
+			var str = "<ul>"; 
+			$("img").each(function(index, item){
+				var src = $(item).attr("src");
+				str += `<li>${src}</li>`;
+			});
+			$("#here").html(str+"</ul>");	//html() : html 태그 인식
+											//text() : html태그도 text 취급, 단순 문자열일 때 사용한다.
+		});
+		
+		$("#btn5").click(function(){
+			 //$("#here").remove();	//div#here 자체가 없어짐
+			 $("#here").empty();	//내용만 지움
+		});
+		
+		$("#btn6").click(function(){
+			//둘 중 하나 선택하면 됨
+			//$("<h1></h1>").text("빨리 점심")appendTo("#here");
+			$("<h1>빨리 점심</h1>").appendTo("#here");
+			$("<h1>오후 시작</h1>").prependTo("#here");
+			$("<h1>집가기 시작</h1>").insertBefore("#here");
+			$("<h1>꿈나라 시작</h1>").insertAfter("#here");
+			
+			$("#here").append("<h2>민호1</h2>");
+			$("#here").prepend("<h2>민호2</h2>");
+			$("#here").before("<h2>민호3</h2>");
+			$("#here").after("<h2>민호4</h2>");
+		});
+		
+		$("#btn7").click(function(){
+			var arr = [];
+			arr.push({name:"은정", address:"홍대입구"});
+			arr.push({name:"은하", address:"강남구"});
+			arr.push({name:"은주", address:"마포구"});
+			arr.push({name:"은진", address:"오정입구"});
+			arr.push({name:"은경", address:"부평구"});
+			
+			for(let i=0; i<arr.length; i++){
+				$("#here").appendTo("<div></div>");
+				$("<div></div>").appendTo("#here");
+			}
+			
+			$("#here div").append(function(index){
+				$(this).append(`<h1>${arr[index].name}</h1>`)
+				$(this).append(`<h2>${arr[index].address}</h2>`)
+			})
+		});
+		
+		//경윤오빠코드
+		/* $('#btn8').click(function(){
+			setInterval(function(){
+				$('#myPic img').first().appendTo($('#myPic'));
+			}, 1000);
+			
+		}); */
+		
+		$("#btn8").click(function(){ 
+			setInterval(function(){
+				$("#mypicture img").first().appendTo($(`#mypicture`));
+			}, 1000)
+			
+		});
+	});
+	 
+	
+</script>
+<style>
+	
+</style>
+</head>
+<body>
+	<button id="btn1">속성추가</button>
+	<button id="btn2">속성제거</button>
+	<button id="btn3">CSS</button>
+	<button id="btn4">html, text</button>
+	<button id="btn5">remove, empty</button>
+	<button id="btn6">객체 생성</button>
+	<button id="btn7">객체 생성</button>
+	<button id="btn8">하나씩 이동하기</button>
+	<br/>
+	<div id="mypicture">
+		<img src="../html5-css3-master/03/images/kids.jpg"/>
+		<img src="../html5-css3-master/03/images/muffin.svg"/>
+		<img src="../html5-css3-master/03/images/umbrella.jpg"/>
+		<img src="../html5-css3-master/03/images/umbrella.jpg"/>
+		<img src="../html5-css3-master/03/images/umbrella.jpg"/>
+	
+	</div>
+	<div id="here" style="border: 5px dotted green">여기</div>
+	
+	<div></div>
+	
+</body>
+</body>
+</html>
