@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../jQuery/jquery-3.6.4.min.js"></script>
+<script>
+	var myName = "태민... window의 속성";
+	var obj = {
+		"myName" : "object의 myName",
+		age : 20
+	};
+
+	$(function() {
+		var myName = "태민... function의 지역변수";
+
+		$("#btn4").on("click", function() {
+			print("javaScript");
+		});
+
+		$("#btn1").on("click", function() {
+			//call : 파라미터 하나만 보낼 때 
+			print.call(obj, "파라메터1");
+		})
+		$("#btn2").on("click", function() {
+			//apply : 파라미터 여러개 보낼 때
+			print.apply(obj, [ "파라메터2" ]);
+		})
+		$("#btn3").on("click", function() {
+			//내가 씀...bind : 무언가 담아놓을 때.	//f에는 print함수가 담겨있음.
+			var f = print.bind(obj); //호출이 아니고 연결만 한다. 
+			f("파라메터3") //함수 호출
+		})
+		$("#btn5").on("click", function() {
+			//서버에 요청 보내기.... form(action)이용 또는 location.href
+			location.href = "../day2/empSelect.jsp";
+		})
+
+		//ajax : asynchronize js and xml
+		$("#btn6").on("click", function() {
+			//새로고침됨 -> 페이지가 이동됨
+			//location.href = "../day2/empSelect.jsp";
+
+			//서버에 요청 보내기 ...page 이동 없이 요청하고자 한다.
+			//Asynchronize Javascript and XML
+			var xhr = new XMLHttpRequest();
+			//(요청방식, 파일, 비동기여부)... false라면 비동기가 아님, true이면 비동기임
+			xhr.open("get", "2.html", true); //3번째 arg: 비동기 여부
+			//현재 어떤 상태인지 감시하는 애 : onreadystatechange
+			xhr.onreadystatechange = function() {
+				//readyState: 오류없이 감., 제대로 보내짐:성공(200)
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					$("#here").html(xhr.responseText);
+				}
+			};
+			xhr.send();
+			alert("aaa");
+		})
+
+		//쌤코드
+		$("#btn7").on("click", function() {
+			//서버에 요청보내기 ...page이동 없이 요청하고자한다.
+			//(Asynchronize JavaScript and XML)
+			var xhr = new XMLHttpRequest();
+			xhr.open("get", "emp.jsp", true);//3번째arg:비동기여부
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var output = "";
+					var str = xhr.responseText;
+					console.log(str);
+					var obj = JSON.parse(str);
+					output += `<input value="${obj.firstname}" >`;
+					output += `<input value="${obj.age}" >`;
+					$("#here").html(output);
+				}
+			};
+			xhr.send();
+		});
+		//내꺼 안됨
+		/*$("#btn7").on("click", function(){
+			
+			//Asynchronize Javascript and XML
+			var xhr = new XMLHttpRequest();
+			
+			xhr.open("get", "emp.jsp", true);
+			/
+			xhr.onreadystatechange = function(){
+				
+				if(xhr.readyState == 4 && xhr.status == 200){
+					var output = "";
+					var obj = JSON.parse(xhr.responseText);
+					output += `<input value="${obj.firstname}" >`;
+					output += `<input value="${obj.age}" >`;
+					
+					$("#here").html(output);
+				}
+			};
+			xhr.send();
+			alert("aaa");
+		})
+		 */
+	});
+
+	function print(param) {
+		$("#here").html(param + "*********" + this.myName);
+	}
+</script>
+<script>
+	$(function(){
+		$("#btn8").on("click", function(){
+			var empid = $("#empid").val();
+			var xhr = new XMLHttpRequest();
+			xhr.open("get", "emp.jsp?empid="+empid, true);
+			xhr.onreadystatechange = function(){
+				
+				if(xhr.readyState != 4 || xhr.status!= 200) return;
+				
+				var str = xhr.responseText;
+				var obj = JSON.parse(str);
+				var output = "";
+
+				output += `<input value="${obj.firstname}" >`;
+				output += `<input value="${obj.age}" >`;
+				
+				$("#here").html(output);
+			};
+			xhr.send();
+		});
+		
+		$("#btn9").on("click", function(){
+			//가장 단순한 ajax method... 가공 없이 그대로 사용할 때 : load
+			$("#here").load("2.html", {}, function(){
+				console.log("load수행한 후 실행한다.");
+				alert("load 수행한 후 실행한다.");
+			});
+		});
+		
+		$("#btn10").on("click", function(){
+			//가장 단순한 ajax method... 가공 없이 그대로 사용할 때 : load
+			$("#here").load("emp.jsp", {"empid" : 200}, function(){
+				console.log("load수행한 후 실행한다.");
+				alert("load 수행한 후 실행한다.");
+			});
+		});
+		
+		//조회: get //저장: post
+		//get : 주소창에 id가 간다. 
+		$("#btn11").on("click", function(){
+			var empid = $("#empid").val();
+			$.get("emp.jsp?empid="+empid, function(responseData, status){
+				console.log(status);
+				alert("get 수행한 후 실행한다.");
+				var obj = JSON.parse(responseData);
+				var output = "";
+				output += `<input value="${obj.firstname}" >`;
+				output += `<input value="${obj.age}" >`;
+				
+				$("#here").html(output);
+				
+			});
+		});
+		
+		//post
+		$("#btn12").on("click", function(){
+			var empid = $("#empid").val();
+			var parameter = {"empid" : empid};
+			$.get("emp.jsp", parameter, function(responseData, status){
+				console.log(status);
+				var obj = JSON.parse(responseData);
+				var output = "";
+				output += `<input value="${obj.firstname}" >`;
+				output += `<input value="${obj.age}" >`;
+				
+				$("#here").html(output);
+				
+			});
+		});
+		
+		//method(요청방식) 상관없이 통합 함수
+		$("#btn13").on("click", function(){
+			$.ajax({
+				url:"emp.jsp",
+				method:"post",
+				data : {"empid" : $("#empid").val()},
+				success:function(responseData, status, xhr){
+					var obj = JSON.parse(responseData);
+					var output = "";
+					console.log(xhr);
+					output += `<input value="${obj.firstname}" >`;
+					output += `<input value="${obj.age}" >`;
+					
+					$("#here").html(output);
+				},
+				error : function(xhr, status, error){}
+			})
+		});
+		
+		//빗썸으로 연습
+		$("#btn14").on("click", function(){
+			const options = {method: 'GET', headers: {accept: 'application/json'}};
+
+			//promise
+			fetch('https://api.bithumb.com/public/ticker/ALL_KRW', options)
+			  .then(response => response.json())	//js object로 return
+			  .then(response => {
+				  console.log(response.data);
+				  var output = "<table border=1><tr><td>종목</td> <td>시작가</td> <td>종가</td></tr>";
+				  for(let key in response.data){
+					  var obj = response.data[key];
+					  
+					  output += `<tr><td>${key}</td> <td>${obj["opening_price"]}</td>`;
+					  output += 	`<td>${obj["closing_price"]}</td></tr>`;
+				  }
+				  output += "</table>";
+				  $("#here").html(output);
+			  })
+			  .catch(err => console.error(err));
+		});
+		
+	});
+</script>
+</head>
+<body>
+<a href = “http://www.myhome.com?name=lee”>링크</a>
+	<h1>jQuery 연습</h1>
+	<button id="btn1">call</button>
+	<button id="btn2">apply</button>
+	<button id="btn3">bind</button>
+	<button id="btn4">함수 호출</button>
+	<button id="btn5">전통적인 요청 보내기</button>
+	<button id="btn6">js로 Ajax</button>
+	<button id="btn7">js로 Ajax</button>
+	<input type="number" value="100" id="empid">
+	<button id="btn8">직원정보 가져오기</button>
+	<button id="btn9">jQuery Ajax(load)</button>
+	<button id="btn10">jQuery Ajax(load)</button>
+	<button id="btn11">jQuery Ajax(get)</button>
+	<button id="btn12">jQuery Ajax(post)</button>
+	<button id="btn13">jQuery Ajax(ajax)</button>
+	<button id="btn14">fetch함수 사용</button>
+	
+	<div id="here">여기</div>
+</body>
+</html>

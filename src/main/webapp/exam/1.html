@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../jQuery/jquery-3.6.4.min.js"></script>
+
+</head>
+<body>
+	<div id="page">
+		<h1 id="header">목록</h1>
+		<h2>목록</h2>
+		<ul id="list">
+			<li id="one" class="hot"><em>안녕1</em></li>
+			<li id="two" class="hot">안녕2</li>
+			<li id="three" class="hot">안녕3</li>
+			<li id="four"  >안녕4</li>
+		</ul>
+	</div>
+	<button id="btn1">버튼</button>
+	<div id='here'>여기에 출력</div> 
+	<script>
+		var firstElement = document.getElementById("one");
+		console.log(firstElement)
+		
+		 document.getElementById("three").innerText ="귤";
+		
+		var arr = ['사과', '바나나', '수박', '복숭아'];
+		$.each(arr, function(index, item){console.log(item);});
+		
+		/* $.each(param, function(index, item){
+				data[item.name] = item.value;
+			}); */
+			
+			//문제 10
+		 var emp={'firstName':'kim', salary:1000, deptid:10}
+		
+			$("#btn1").on("click",() => {
+				$.ajax({
+					url: "./empInsert",
+					data: {'firstName' : 'kim',
+							'salary':1000,
+							'deptid':10
+						   },
+					method: "post",
+					success: (result, status, xhr) => {
+						$("#here").html("입력성공");
+					},
+					error : () => {
+						$("#here").html("입력실패");
+					}
+				});
+			})
+	</script>
+</body>
+</html>
